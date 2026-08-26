@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shahin Ahmed - Team Head (Customer Service Officer) at Prothoma Bangladesh">
+  <title>Shahin Ahmed | Personal Portfolio</title>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#080c0b;
+      color:#fff;
+      line-height:1.6;
+      overflow-x:hidden
+    }
+    a{text-decoration:none;color:inherit}
+    :root{
+      --green:#18e66b;
+      --green2:#08c957;
+      --dark:#080c0b;
+      --dark2:#0d1311;
+      --muted:#9aa5a0;
+      --line:rgba(255,255,255,.08)
+    }
+
+    /* Loader */
+    #loader{
+      position:fixed;inset:0;background:#070b0a;z-index:9999;
+      display:flex;align-items:center;justify-content:center;
+      transition:.5s
+    }
+    .loader-logo{
+      font-size:30px;font-weight:900;letter-spacing:2px;color:var(--green);
+      animation:pulse 1.1s infinite
+    }
+    @keyframes pulse{50%{opacity:.35;transform:scale(.96)}}
+
+    /* Background decoration */
+    .bg-grid{
+      position:fixed;inset:0;pointer-events:none;z-index:-1;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+      background-size:70px 70px;
+      mask-image:linear-gradient(to bottom,#000,transparent 85%)
+    }
+    .glow{
+      position:fixed;width:380px;height:380px;border-radius:50%;
+      background:rgba(24,230,107,.07);filter:blur(90px);pointer-events:none;z-index:-1
+    }
+    .glow.one{top:5%;left:-120px}.glow.two{right:-130px;top:55%}
+
+    /* Top news bar */
+    .topbar{
+      height:42px;background:#26353a;border-bottom:1px solid rgba(255,255,255,.06);
+      display:flex;align-items:center;justify-content:center
+    }
+    .top-inner{
+      width:min(1060px,92%);display:flex;align-items:center;justify-content:space-between;
+      font-size:11px;color:#d7dedb
+    }
+    .ticker{display:flex;align-items:center;gap:10px;overflow:hidden;white-space:nowrap}
+    .ticker-icon{
+      width:25px;height:25px;background:var(--green);color:#07100b;
+      display:grid;place-items:center;font-weight:900;border-radius:2px
+    }
+    .ticker-text{font-weight:700;letter-spacing:.4px}
+    .top-social{display:flex;gap:18px;color:#dce5e1}
+    .top-social a:hover{color:var(--green)}
+
+    /* Navbar */
+    header{
+      position:sticky;top:0;z-index:1000;background:rgba(7,11,10,.92);
+      backdrop-filter:blur(14px);border-bottom:1px solid var(--line)
+    }
+    nav{
+      width:min(1060px,92%);height:78px;margin:auto;
+      display:flex;align-items:center;justify-content:space-between
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900}
+    .brand-mark{
+      width:38px;height:38px;border-radius:50%;background:var(--green);
+      color:#07110b;display:grid;place-items:center;font-size:20px;
+      box-shadow:0 0 25px rgba(24,230,107,.3)
+    }
+    .brand small{display:block;font-size:8px;letter-spacing:2px;color:#8c9893}
+    .nav-links{display:flex;gap:30px;align-items:center}
+    .nav-links a{
+      color:#c0c8c4;font-size:12px;font-weight:700;letter-spacing:.6px;
+      position:relative;padding:30px 0
+    }
+    .nav-links a:after{
+      content:"";position:absolute;left:0;bottom:18px;width:0;height:2px;background:var(--green);transition:.3s
+    }
+    .nav-links a:hover,.nav-links a.active{color:#fff}
+    .nav-links a:hover:after,.nav-links a.active:after{width:100%}
+    .search{color:#aab4af;font-size:13px}
+    .dots{display:grid;grid-template-columns:repeat(3,4px);gap:4px}
+    .dots span{width:4px;height:4px;background:var(--green);border-radius:50%}
+    .menu-btn{display:none;font-size:25px;color:var(--green);cursor:pointer}
+
+    /* Hero */
+    .hero{
+      min-height:650px;width:min(1060px,92%);margin:auto;
+      display:grid;grid-template-columns:1.08fr .92fr;align-items:center;
+      position:relative;overflow:hidden
+    }
+    .hero:before{
+      content:"";position:absolute;inset:0;
+      background:radial-gradient(circle at 75% 55%,rgba(24,230,107,.08),transparent 28%);
+      pointer-events:none
+    }
+    .hero-content{padding:70px 0 60px;position:relative;z-index:2}
+    .eyebrow{
+      color:var(--green);font-size:12px;letter-spacing:4px;font-weight:800;
+      margin-bottom:18px;text-transform:uppercase
+    }
+    h1{
+      font-size:clamp(45px,6vw,82px);line-height:.94;text-transform:uppercase;
+      font-weight:950;letter-spacing:-3px;max-width:600px
+    }
+    h1 span{color:var(--green)}
+    .hero-sub{
+      border-left:2px solid var(--green);padding-left:18px;margin-top:28px;
+      max-width:520px;color:#aeb8b3;font-size:15px
+    }
+    .hero-buttons{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:13px;padding:15px 20px;
+      background:var(--green);color:#06100a;font-size:12px;font-weight:900;
+      text-transform:uppercase;letter-spacing:.8px;border:1px solid var(--green);
+      transition:.25s
+    }
+    .btn:hover{background:transparent;color:var(--green);transform:translateY(-2px)}
+    .btn.alt{background:transparent;color:#fff;border-color:#36413d}
+    .btn.alt:hover{border-color:var(--green);color:var(--green)}
+    .hero-photo{
+      align-self:end;height:620px;display:flex;justify-content:center;align-items:end;
+      position:relative
+    }
+    .photo-frame{
+      width:min(420px,100%);height:530px;position:relative;display:flex;align-items:end;justify-content:center
+    }
+    .photo-frame:before{
+      content:"";position:absolute;inset:35px 10px 0;
+      border:1px solid rgba(24,230,107,.15);
+      background:linear-gradient(180deg,rgba(24,230,107,.03),rgba(0,0,0,.35))
+    }
+    .photo-frame img{
+      position:relative;z-index:2;width:100%;height:100%;object-fit:cover;
+      object-position:center top;filter:grayscale(8%);mask-image:linear-gradient(to bottom,#000 80%,transparent 100%)
+    }
+    .photo-placeholder{
+      position:relative;z-index:2;width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+      text-align:center;color:#68736e;font-size:14px;padding:30px
+    }
+    .photo-placeholder div{border:1px dashed #3b4b44;padding:40px 25px;background:#0d1411}
+    .photo-tag{
+      position:absolute;z-index:3;right:-8px;bottom:80px;background:var(--green);
+      color:#06100a;padding:12px 16px;font-size:10px;font-weight:900;letter-spacing:1px
+    }
+
+    /* Sections */
+    section{padding:100px 0}
+    .container{width:min(1060px,92%);margin:auto}
+    .section-head{margin-bottom:50px}
+    .section-kicker{color:var(--green);font-size:11px;font-weight:900;letter-spacing:4px;text-transform:uppercase}
+    .section-title{font-size:45px;line-height:1.05;margin-top:10px;text-transform:uppercase;letter-spacing:-1px}
+    .section-title span{color:var(--green)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px}
+    .about-text{color:#aab4af;font-size:15px}
+    .about-text p{margin-bottom:18px}
+    .info-list{display:grid;gap:1px;background:var(--line)}
+    .info-row{display:flex;justify-content:space-between;gap:20px;padding:17px 18px;background:#0b100f}
+    .info-row strong{color:#fff;font-size:13px}.info-row span{color:#98a39e;text-align:right;font-size:13px}
+
+    /* Cards */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{
+      background:#0c1210;border:1px solid var(--line);padding:30px;transition:.3s;
+      position:relative;overflow:hidden
+    }
+    .card:before{content:"";position:absolute;left:0;top:0;width:0;height:3px;background:var(--green);transition:.3s}
+    .card:hover{transform:translateY(-7px);border-color:rgba(24,230,107,.25)}
+    .card:hover:before{width:100%}
+    .card-icon{font-size:27px;color:var(--green);margin-bottom:18px}
+    .card h3{font-size:19px;margin-bottom:10px}.card p{color:#909b96;font-size:13px}
+
+    /* Experience */
+    .experience{
+      border-left:2px solid var(--green);padding-left:28px;position:relative
+    }
+    .experience:before{
+      content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;background:var(--green);
+      border-radius:50%;box-shadow:0 0 0 7px rgba(24,230,107,.08)
+    }
+    .exp-date{color:var(--green);font-size:11px;font-weight:900;letter-spacing:2px}
+    .experience h3{font-size:30px;margin:8px 0 3px}.experience h4{color:#b1bbb6;font-size:15px;margin-bottom:17px}
+    .experience p{color:#929d98;max-width:700px;font-size:14px}
+
+    /* Skills */
+    .skills{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+    .skill{margin-bottom:24px}
+    .skill-top{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;font-weight:700}
+    .skill-top span:last-child{color:var(--green)}
+    .bar{height:5px;background:#1b2420;overflow:hidden}
+    .bar i{display:block;height:100%;background:var(--green);width:0;transition:1.2s ease}
+
+    /* Contact */
+    .contact-box{
+      background:#0d1411;border:1px solid var(--line);padding:45px;
+      display:grid;grid-template-columns:1fr 1fr;gap:50px
+    }
+    .contact-box h3{font-size:32px;text-transform:uppercase;line-height:1.1}
+    .contact-box h3 span{color:var(--green)}
+    .contact-items{display:grid;gap:15px}
+    .contact-item{
+      display:flex;gap:15px;align-items:center;padding:16px;border:1px solid var(--line);
+      background:#0a0f0d
+    }
+    .contact-item b{color:var(--green);font-size:18px}.contact-item small{display:block;color:#69746f}.contact-item strong{font-size:13px}
+
+    footer{border-top:1px solid var(--line);padding:30px 0;color:#707b76;font-size:12px}
+    footer .container{display:flex;justify-content:space-between;gap:20px}
+    footer span{color:var(--green)}
+
+    /* WhatsApp */
+    .wa{
+      position:fixed;right:24px;bottom:24px;width:62px;height:62px;border-radius:50%;
+      background:#25D366;color:white;display:grid;place-items:center;font-size:29px;
+      z-index:2000;box-shadow:0 10px 35px rgba(37,211,102,.3);cursor:pointer;
+      animation:waPulse 2s infinite
+    }
+    .wa-tooltip{
+      position:absolute;right:75px;white-space:nowrap;background:#fff;color:#111;
+      padding:8px 12px;font-size:11px;font-weight:800;border-radius:4px;opacity:0;
+      transform:translateX(10px);transition:.25s;pointer-events:none
+    }
+    .wa:hover .wa-tooltip{opacity:1;transform:translateX(0)}
+    @keyframes waPulse{50%{box-shadow:0 10px 35px rgba(37,211,102,.3),0 0 0 12px rgba(37,211,102,.05)}}
+
+    /* Mobile */
+    @media(max-width:850px){
+      .top-social,.search,.dots{display:none}
+      .menu-btn{display:block}
+      .nav-links{
+        position:absolute;top:78px;left:0;width:100%;background:#080c0b;
+        flex-direction:column;gap:0;padding:15px 5%;display:none;border-bottom:1px solid var(--line)
+      }
+      .nav-links.show{display:flex}
+      .nav-links a{width:100%;padding:13px 0}
+      .nav-links a:after{bottom:5px}
+      .hero{grid-template-columns:1fr;min-height:auto}
+      .hero-content{padding:75px 0 20px}
+      .hero-photo{height:500px;margin-top:10px}
+      .about-grid,.contact-box,.skills{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      section{padding:75px 0}
+      .section-title{font-size:36px}
+      footer .container{flex-direction:column}
+    }
+    @media(max-width:500px){
+      .topbar{display:none}
+      nav{height:68px}
+      .hero-content{padding-top:60px}
+      h1{font-size:48px;letter-spacing:-2px}
+      .hero-sub{font-size:13px}
+      .hero-photo{height:430px}
+      .photo-frame{height:420px}
+      .contact-box{padding:28px}
+      .contact-box h3{font-size:26px}
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loader"><div class="loader-logo">SHAHIN<span style="color:#fff">.</span></div></div>
+  <div class="bg-grid"></div>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+
+  <div class="topbar">
+    <div class="top-inner">
+      <div class="ticker">
+        <div class="ticker-icon">S</div>
+        <div class="ticker-text">WELCOME TO SHAHIN AHMED'S PERSONAL PORTFOLIO</div>
+      </div>
+      <div class="top-social">
+        <a href="https://www.facebook.com/shahin.ahmed.360006" target="_blank">f</a>
+        <a href="tel:+8801712345678">☎</a>
+        <a href="#contact">in</a>
+        <a href="#contact">◎</a>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <nav>
+      <a href="#home" class="brand">
+        <div class="brand-mark">S</div>
+        <div>SHAHIN<small>PERSONAL PORTFOLIO</small></div>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a class="active" href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#services">SERVICE</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#contact">CONTACT</a>
+      </div>
+
+      <div class="dots" aria-label="menu">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <div class="menu-btn" id="menuBtn">☰</div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="eyebrow">Team Head • Customer Service</div>
+        <h1><span>People</span> First.<br>Service<br>Always.</h1>
+        <p class="hero-sub">
+          I am <strong style="color:#fff">Shahin Ahmed</strong>, Team Head (Customer Service Officer)
+          at <strong style="color:#fff">Prothoma Bangladesh</strong>. I focus on professional
+          customer support, team coordination and creating a better customer experience.
+        </p>
+        <div class="hero-buttons">
+          <a class="btn" href="#about">GET STARTED <span>→</span></a>
+          <a class="btn alt" href="#contact">CONTACT ME</a>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <div class="photo-frame">
+          <!--
+            YOUR PHOTO:
+            1. Put your photo in the same folder as this index.html.
+            2. Rename it to "shahin.jpg".
+            3. Replace the placeholder below with:
+               <img src="shahin.jpg" alt="Shahin Ahmed">
+          -->
+          <div class="photo-placeholder">
+            <div>
+              <strong style="color:#fff;font-size:20px">YOUR PHOTO HERE</strong><br><br>
+              Replace this box with your own photo.<br>
+              Recommended: portrait image, JPG/PNG.
+            </div>
+          </div>
+          <div class="photo-tag">SHAHIN AHMED</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Who I Am</div>
+          <h2 class="section-title">About <span>Me</span></h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              Hello! I’m <strong style="color:#fff">Shahin Ahmed</strong>. I work as a
+              <strong style="color:#fff">Team Head (Customer Service Officer)</strong> at
+              <strong style="color:#fff">Prothoma Bangladesh</strong>.
+            </p>
+            <p>
+              My professional focus is customer communication, service quality, team support,
+              problem solving and maintaining a positive relationship with customers.
+            </p>
+            <p>
+              I believe great customer service starts with listening carefully, responding
+              professionally and making every interaction valuable.
+            </p>
+          </div>
+
+          <div class="info-list">
+            <div class="info-row"><strong>Full Name</strong><span>Shahin Ahmed</span></div>
+            <div class="info-row"><strong>Designation</strong><span>Team Head (Customer Service Officer)</span></div>
+            <div class="info-row"><strong>Company</strong><span>Prothoma Bangladesh</span></div>
+            <div class="info-row"><strong>Phone</strong><span>01712345678</span></div>
+            <div class="info-row"><strong>Profession</strong><span>Customer Service</span></div>
+            <div class="info-row"><strong>Availability</strong><span>Professional Opportunities</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">What I Do</div>
+          <h2 class="section-title">Professional <span>Services</span></h2>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">◉</div>
+            <h3>Customer Support</h3>
+            <p>Professional customer communication, issue handling and service support with a customer-first approach.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">⌁</div>
+            <h3>Team Leadership</h3>
+            <p>Supporting team members, coordinating daily activities and helping maintain strong service performance.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">✓</div>
+            <h3>Problem Solving</h3>
+            <p>Understanding customer needs, identifying issues and working toward practical and effective solutions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Career</div>
+          <h2 class="section-title">Work <span>Experience</span></h2>
+        </div>
+
+        <div class="experience">
+          <div class="exp-date">CURRENT POSITION</div>
+          <h3>Team Head</h3>
+          <h4>Customer Service Officer • Prothoma Bangladesh</h4>
+          <p>
+            Responsible for customer service coordination, team support, communication,
+            issue resolution and helping deliver a smooth and professional customer experience.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">My Strengths</div>
+          <h2 class="section-title">Professional <span>Skills</span></h2>
+        </div>
+
+        <div class="skills">
+          <div>
+            <div class="skill">
+              <div class="skill-top"><span>Customer Service</span><span>95%</span></div>
+              <div class="bar"><i data-width="95%"></i></div>
+            </div>
+            <div class="skill">
+              <div class="skill-top"><span>Team Coordination</span><span>90%</span></div>
+              <div class="bar"><i data-width="90%"></i></div>
+            </div>
+            <div class="skill">
+              <div class="skill-top"><span>Communication</span><span>92%</span></div>
+              <div class="bar"><i data-width="92%"></i></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="skill">
+              <div class="skill-top"><span>Problem Solving</span><span>88%</span></div>
+              <div class="bar"><i data-width="88%"></i></div>
+            </div>
+            <div class="skill">
+              <div class="skill-top"><span>Leadership</span><span>87%</span></div>
+              <div class="bar"><i data-width="87%"></i></div>
+            </div>
+            <div class="skill">
+              <div class="skill-top"><span>Professional Support</span><span>93%</span></div>
+              <div class="bar"><i data-width="93%"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <div>
+            <div class="section-kicker">Let's Connect</div>
+            <h3>Have a question?<br><span>Let's talk.</span></h3>
+            <p style="color:#87938d;margin-top:20px;font-size:14px">
+              Feel free to contact me for professional communication, customer service
+              related opportunities or any relevant discussion.
+            </p>
+            <div class="hero-buttons">
+              <a class="btn" href="https://wa.me/8801712345678?text=Hello%20Shahin%20Ahmed" target="_blank">WHATSAPP →</a>
+              <a class="btn alt" href="https://www.facebook.com/shahin.ahmed.360006" target="_blank">FACEBOOK</a>
+            </div>
+          </div>
+
+          <div class="contact-items">
+            <a class="contact-item" href="tel:+8801712345678">
+              <b>☎</b>
+              <div><small>PHONE</small><strong>01712345678</strong></div>
+            </a>
+            <a class="contact-item" href="https://wa.me/8801712345678" target="_blank">
+              <b>◉</b>
+              <div><small>WHATSAPP</small><strong>Chat with Shahin Ahmed</strong></div>
+            </a>
+            <a class="contact-item" href="https://www.facebook.com/shahin.ahmed.360006" target="_blank">
+              <b>f</b>
+              <div><small>FACEBOOK</small><strong>Shahin Ahmed</strong></div>
+            </a>
+            <div class="contact-item">
+              <b>◆</b>
+              <div><small>COMPANY</small><strong>Prothoma Bangladesh</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div>© <span id="year"></span> Shahin Ahmed. All Rights Reserved.</div>
+      <div>Designed with <span>♥</span> • Personal Portfolio</div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a class="wa" href="https://wa.me/8801712345678?text=Hello%20Shahin%20Ahmed" target="_blank" aria-label="Chat on WhatsApp">
+    <span>◉</span>
+    <span class="wa-tooltip">Chat on WhatsApp</span>
+  </a>
+
+  <script>
+    // Loader
+    window.addEventListener("load", function(){
+      setTimeout(function(){
+        document.getElementById("loader").style.opacity="0";
+        setTimeout(function(){
+          document.getElementById("loader").style.display="none";
+        },500);
+      },500);
+    });
+
+    // Mobile menu
+    const menuBtn=document.getElementById("menuBtn");
+    const navLinks=document.getElementById("navLinks");
+    menuBtn.addEventListener("click",()=>navLinks.classList.toggle("show"));
+    document.querySelectorAll(".nav-links a").forEach(a=>{
+      a.addEventListener("click",()=>navLinks.classList.remove("show"));
+    });
+
+    // Active nav
+    const sections=document.querySelectorAll("section[id]");
+    const navItems=document.querySelectorAll(".nav-links a");
+    window.addEventListener("scroll",()=>{
+      let current="";
+      sections.forEach(section=>{
+        if(window.scrollY >= section.offsetTop-180) current=section.id;
+      });
+      navItems.forEach(a=>{
+        a.classList.toggle("active",a.getAttribute("href")==="#"+current);
+      });
+    });
+
+    // Skill bars animation
+    const skillBars=document.querySelectorAll(".bar i");
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.style.width=entry.target.dataset.width;
+        }
+      });
+    },{threshold:.3});
+    skillBars.forEach(bar=>observer.observe(bar));
+
+    // Current year
+    document.getElementById("year").textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
